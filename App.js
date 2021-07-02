@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
+import Header from './components/Header';
 
 //
 // 
@@ -11,30 +12,7 @@ import AddTodo from './components/AddTodo';
 
 export default function App() {
 
-  const [todos, setTodos] = useState([
-    {
-      text: 'todo one',
-      id: '1',
-      completed: false
-    },
-    {
-      text: 'todo two',
-      id: '2',
-      completed: false
-    },
-    {
-      text: 'todo three',
-      id: '3',
-      completed: false
-    },
-    {
-      text: 'todo four',
-      id: '4',
-      completed: true
-    },
-
-
-  ])
+  const [todos, setTodos] = useState( [ ] );
 
 
   //function to remove a todo from the list
@@ -55,7 +33,7 @@ export default function App() {
   const addTodoHandler = (textInput) => {
     const todo = {
       text: textInput,
-      id: (new Date().getTime.toString()),
+      id: (new Date().getTime()).toString(),
       completed: false
     }
 
@@ -68,7 +46,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-
+      <Header/>
       <View style={styles.content}>
         {/* todo list */}
 
@@ -107,7 +85,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    padding: 30,
+    padding: 20,
 
   },
   header: {
@@ -115,7 +93,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#DCFDE4',
   },
   todoList: {
-    padding: 10,
+    //padding: 10,
+    height: '80%',
+    paddingBottom: 3,
   },
 
 });
