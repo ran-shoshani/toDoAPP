@@ -1,6 +1,5 @@
 import React, { useState } from  'react';
 import { StyleSheet, Text, View , TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
@@ -19,7 +18,7 @@ return(
                 
                 {isCompleted ? <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" /> :
                 <MaterialIcons style={styles.checkIcon} name="check-circle-outline" size={24} color="black" />}
-                <Text style={styles.todoText, isCompleted ? styles.todoTextPicked : ''}> {item.text} </Text>
+                <Text style={[styles.todoText, isCompleted ? styles.todoTextPicked : '']}> {item.text} </Text>
             </View>
              
         </TouchableOpacity>
@@ -59,9 +58,9 @@ const styles =StyleSheet.create({
     
       },
       todoText: {
-        fontSize: 32,
+        fontSize: 24,
         fontWeight: 'bold',
-        padding: 10,
+        
       },
 
       deleteIcon: {
@@ -85,7 +84,7 @@ const styles =StyleSheet.create({
     },
 
     checkIcon:{
-        padding: 10,
+        paddingRight: 10,
     }
 
 });

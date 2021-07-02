@@ -1,6 +1,7 @@
 import React, { useState } from  'react';
 import { StyleSheet, Text, View ,FlatList , SafeAreaView } from 'react-native';
-import TodoItem from './components/TodoItem'
+import TodoItem from './components/TodoItem';
+import AddTodo from './components/AddTodo';
 
 //
 // 
@@ -45,6 +46,13 @@ const removeTodo = (id) => {
 }
 
 
+const toggleTodo = (id) => {
+
+  console.log(id);
+}
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -58,16 +66,15 @@ const removeTodo = (id) => {
           <FlatList 
           data={todos}
           renderItem = {( {item} ) => (
-            <TodoItem item={item} removeTodo={removeTodo}/>
+            <TodoItem item={item} removeTodo={removeTodo} toggleTodo={toggleTodo}/>
             )}
             keyExtractor={(item) =>item.id}
           /> 
         </View>
 
         {/* create task button  */}
-
+            <AddTodo/>
       </View>
-
 
     </SafeAreaView>
   );
