@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { StyleSheet, View , Text , TextInput , Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 
 
 export default function AddTodo() {
 
 
     const [textInput, setTextInput] = useState('');
-    
+
     const textInputHandler = (value) => {
         setTextInput(value)
     }
 
-    return(
+    return (
         <View style={styles.textInput}>
-            <Textinput 
-            style={styles.textInput}
-            placeholder='What to do?'
-            clearTextOnFocus
-            onChangeText={textInputHandler}
+            <TextInput
+                style={styles.textInput}
+                placeholder='What to do?'
+                clearTextOnFocus
+                onChangeText={textInputHandler}
             />
         </View>
     )
@@ -26,15 +26,15 @@ export default function AddTodo() {
 
 
 
-const styles = styleSheet.create({ 
+const styles = StyleSheet.create({
     addTodo: {
         marginHorizontal: 8,
     },
-textInput:{
-    marginBottom: 10,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#DCFDE4',
-},
+    textInput: {
+        marginBottom: 10,
+        paddingHorizontal: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#DCFDE4',
+    },
 
 })
