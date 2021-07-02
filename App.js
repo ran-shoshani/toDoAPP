@@ -13,22 +13,22 @@ export default function App() {
 const [todos,setTodos] = useState ([
   {
     text: 'todo one',
-    id: 1,
+    id: '1',
     completed: false
   },
   {
     text: 'todo two',
-    id: 2,
+    id: '2',
     completed: false
   },
   {
     text: 'todo three',
-    id: 3,
+    id: '3',
     completed: false
   },
   {
     text: 'todo four',
-    id: 4,
+    id: '4',
     completed: true
   },
 
@@ -52,7 +52,7 @@ const removeTodo = (id) => {
       <View style={styles.content}>
         {/* todo list */}
 
-        <View> style={styles.todoList}  
+        <View style={styles.todoList}>
           {/* flatL list with todos */}
 
           <FlatList 

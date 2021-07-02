@@ -19,9 +19,9 @@ return(
                 
                 {isCompleted ? <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" /> :
                 <MaterialIcons style={styles.checkIcon} name="check-circle-outline" size={24} color="black" />}
-
+                <Text style={styles.todoText, isCompleted ? styles.todoTextPicked : ''}> {item.text} </Text>
             </View>
-             <Text style={styles.todoText}> {item.text} </Text>
+             
         </TouchableOpacity>
         {/* { deletebutton} */}
         <TouchableOpacity onPress={() => removeTodo(item.id)}>
