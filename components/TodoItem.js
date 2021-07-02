@@ -4,14 +4,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 
-export default function TodoItem ({ item , removeTodo , toggleTodo }) {
+export default function TodoItem ({ item , removeTodoHandler , toggleTodoHandler }) {
 
 const [isCompleted, setIsCompleted] = useState(item.completed);
 
 return( 
     <View style={styles.todoItem}>
         { /* checkbox icon */}
-        <TouchableOpacity onPress={() => toggleTodo(item.id)}>
+        <TouchableOpacity onPress={() => toggleTodoHandler(item.id)}>
             {/* checkbox icon */}
             <View style={styles.todoRow}>
                 {/* ternary operator */}
@@ -23,7 +23,7 @@ return(
              
         </TouchableOpacity>
         {/* { deletebutton} */}
-        <TouchableOpacity onPress={() => removeTodo(item.id)}>
+        <TouchableOpacity onPress={() => removeTodoHandler(item.id)}>
             <View style={styles.deleteIcon}> 
 
                    {/* ternary operator */}

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, TextInputComponent } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
-export default function AddTodo() {
+export default function AddTodo({ addTodoHandler }) {
 
 
     const [textInput, setTextInput] = useState('');
@@ -19,6 +20,9 @@ export default function AddTodo() {
                 clearTextOnFocus
                 onChangeText={textInputHandler}
             />
+            <TouchableOpacity onPress={() => addTodoHandler(textInput)}>
+                <MaterialIcons name="add-circle" size={24} color="black" />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -32,8 +36,12 @@ const styles = StyleSheet.create({
     },
     textInput: {
         marginBottom: 10,
-        paddingHorizontal: 8,
-        borderBottomWidth: 1,
+        paddingLeft: 10,
+
+
+        borderBottomWidth: 2,
+        borderBottomLeftRadius: 3,
+        borderBottomRightRadius: 3,
         borderBottomColor: '#DCFDE4',
     },
 
