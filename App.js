@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
@@ -12,24 +13,85 @@ import Header from './components/Header';
 
 export default function App() {
 
-  const [todos, setTodos] = useState( [ ] );
+  const [todos, setTodos] = useState([]);
 
+  //
+  const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
+
+
+
+//check if the arrray holding todos has 0 elements, if so, load from device storage
+//empty array passed as second argument means this useEffect will only run on mount/unmount
+// it does not depend on any changing values or changing states and does not need to re-run
+// since we only want to check devices storage once
+useEffect(() => {
+  console.log("useEffect,[]");
+  if (todos.length == 0){
+    loadFromStorage();
+  }
+},[]);
+
+// save to storage after each render when the state of the todos has been changed.
+useEffect(() => {
+  console.log("useEffect,[todos]");
+  saveToStorage();
+},[todos]);
 
   //function to remove a todo from the list
   const removeTodoHandler = (id) => {
-    //update the satate, filter the todo base on its on its id
-    setTodos((todos) => {
-      return todos.filter(todo => todo.id != id);
-    })
+
+    // filter through the todos array, loop for the todo with the correct id and remove it
+    const updatedTodos = todos.filter(todo => todo.id != id);
+
+    //save the updated todos array into the state
+    setTodos(updatedTodos);
+
   }
 
 
+  const saveToStorage = async () => {
+    try {
+      await AsyncStorage.setItem(TODO_LIST_STORAGE, JSON.stringify(todos))
+      .then(() => {
+        //log a success message after storing the todo list
+        console.log('data stored successfully');
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const loadFromStorage = async () => {
+    try {
+      await AsyncStorage.getItem(TODO_LIST_STORAGE)
+      .then((stringifyTodoList) => {
+        // if todolist is not null, there's a string to parse
+        if(stringifyTodoList){
+          console.log("stringifyTodoList: ", stringifyTodoList);
+          const parseTodoList = JSON.parse(stringifyTodoList)
+          setTodos(parseTodoList);
+        }
+      });
+    }catch(err){
+      console.log(err);
+    }
+}
+
+
+
+
+  // switch the state of the completed boolean for the clicked todo
   const toggleTodoHandler = (id) => {
 
-    console.log(id);
+    // map through the todos array, look for the todo with correct id and flip the completed value
+    const updatedTodos = todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo);
+
+    // save the updated todos into the this state
+    setTodos(updatedTodos);
   }
 
 
+  // add the new object (todo) with the text input and the default values
   const addTodoHandler = (textInput) => {
     const todo = {
       text: textInput,
@@ -37,16 +99,26 @@ export default function App() {
       completed: false
     }
 
-    setTodos(todos.concat(todo));
-    console.log(todos);
+    //add the new todo object to the todos array
+    const updatedTodos = todos.concat(todo);
+
+    //save the update todos into the state
+    setTodos(updatedTodos);
+
+    // add will show on the console
+    console.log("addTodoHandler: ", todos);
+
   }
 
-
+  //function to render the Todo items in the flatlist component
+  const renderTodos = ({ item }) => (
+    <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
+  )
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <Header/>
+      <Header />
       <View style={styles.content}>
         {/* todo list */}
 
@@ -55,9 +127,7 @@ export default function App() {
 
           <FlatList
             data={todos}
-            renderItem={({ item }) => (
-              <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
-            )}
+            renderItem={renderTodos}
             keyExtractor={(item) => item.id}
           />
         </View>

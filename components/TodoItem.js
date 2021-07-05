@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TodoItem ({ item , removeTodoHandler , toggleTodoHandler }) {
 
-const [isCompleted, setIsCompleted] = useState(item.completed);
+
 
 return( 
     <View style={styles.todoItem}>
@@ -15,10 +15,12 @@ return(
             {/* checkbox icon */}
             <View style={styles.todoRow}>
                 {/* ternary operator */}
-                
-                {isCompleted ? <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" /> :
-                <MaterialIcons style={styles.checkIcon} name="check-circle-outline" size={24} color="black" />}
-                <Text style={[styles.todoText, isCompleted ? styles.todoTextPicked : '']}> {item.text} </Text>
+
+                {item.completed? 
+                <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" /> :
+                <MaterialIcons style={styles.checkIcon} name="check-circle-outline" size={24} color="black" />
+                }
+                <Text style={[styles.todoText, item.completed? styles.todoTextPicked : '']}> {item.text} </Text>
             </View>
              
         </TouchableOpacity>
@@ -27,7 +29,7 @@ return(
             <View style={styles.deleteIcon}> 
 
                    {/* ternary operator */}
-                {isCompleted ? 
+                {item.completed? 
                 <MaterialIcons name="remove-circle" size={24} color="black" /> :
                 <MaterialIcons name="remove-circle-outline" size={24} color="black" />
                 }
