@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
-
+import {appStyles} from './styles/global';
 //
 // 
 //
@@ -99,6 +99,7 @@ useEffect(() => {
       completed: false
     }
 
+
     //add the new todo object to the todos array
     const updatedTodos = todos.concat(todo);
 
@@ -115,14 +116,20 @@ useEffect(() => {
     <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
   )
 
+
+    // whipe the todo list by reverting it back to its initial state
+    const deleteList = () => {
+      setTodos([]);
+    }
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={appStyles.container}>
       {/* Header */}
-      <Header />
-      <View style={styles.content}>
+      <Header deleteList={deleteList}/>
+      <View style={appStyles.content}>
         {/* todo list */}
 
-        <View style={styles.todoList}>
+        <View style={appStyles.todoList}>
           {/* flatL list with todos */}
 
           <FlatList
@@ -146,28 +153,5 @@ useEffect(() => {
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-
-  content: {
-    padding: 20,
-
-  },
-  header: {
-    height: '15%',
-    backgroundColor: '#DCFDE4',
-  },
-  todoList: {
-    //padding: 10,
-    height: '80%',
-    paddingBottom: 3,
-  },
-
-});
 
 
