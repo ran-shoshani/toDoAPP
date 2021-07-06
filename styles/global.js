@@ -2,9 +2,11 @@ import {StyleSheet} from "react-native";
 
 
 export const colors = {
+    //primary: '#152349',
     primary: '#DCFDE4',
     secondary: '#FDDC5',
     primaryText: '#095585',
+    secondaryText: '#FFFFFF',
     backgroundColor: '#F4F4F4',
 }
 
@@ -38,7 +40,8 @@ export const appStyles = StyleSheet.create({
 export const headerStyles = StyleSheet.create({
     header: {
         height: '15%',
-        backgroundColor: '#DCFDE4',
+        backgroundColor: '#152349',
+        //backgroundColor: '#DCFDE4',
         //marginBottom: '7.5%',
 
         display: 'flex',
@@ -47,6 +50,7 @@ export const headerStyles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     headerText: {
+        
         fontSize: 36,
         fontWeight: 'bold',
 
@@ -66,7 +70,7 @@ export const addTodoStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     textInput: {
         marginBottom: 10,

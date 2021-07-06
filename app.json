@@ -4,11 +4,11 @@
     "slug": "toDoAPP",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/busy_bee.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/busy_bee.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#152349"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

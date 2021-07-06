@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView , Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
+import CategoryPicker from './components/CategoryPicker';
+
 import {appStyles} from './styles/global';
 //
 // 
@@ -91,8 +93,29 @@ useEffect(() => {
   }
 
 
+  // alert for text input
+  const createAlert = () => {
+    Alert.alert(
+      "input too short!",
+      " ",
+      [{text:"OK"}],
+    )
+  }
+
   // add the new object (todo) with the text input and the default values
   const addTodoHandler = (textInput) => {
+
+
+    // of the string.length is too short, port alert instead of adding todo
+    if (textInput.length<=2){
+      console.log("input too short!");
+      createAlert();
+
+      //break the addTodoHandler function
+      return;
+    }
+
+
     const todo = {
       text: textInput,
       id: (new Date().getTime()).toString(),
@@ -122,13 +145,20 @@ useEffect(() => {
       setTodos([]);
     }
 
+
+    // function to filter the todo list by Complete or Remaining or All
+    const handleSelectedItem = (category) => {
+      // filter the todos based on selected item
+      console.log("category selected: ",category);
+    }
+
   return (
     <SafeAreaView style={appStyles.container}>
       {/* Header */}
       <Header deleteList={deleteList}/>
       <View style={appStyles.content}>
+        <CategoryPicker handleSelectedItem={handleSelectedItem}/>
         {/* todo list */}
-
         <View style={appStyles.todoList}>
           {/* flatL list with todos */}
 
