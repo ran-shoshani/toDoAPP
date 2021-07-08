@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView , Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
 import CategoryPicker from './components/CategoryPicker';
 
-import {appStyles} from './styles/global';
+import { appStyles } from './styles/global';
 //
 // 
 //
@@ -15,29 +15,72 @@ import {appStyles} from './styles/global';
 
 export default function App() {
 
+  // state  with todos
   const [todos, setTodos] = useState([]);
 
-  //
+  const [category, setCategory] = useState();
+
+  // starte with filtered Todos
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
+  // constant for the AsyncStorage
   const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
 
 
 
-//check if the arrray holding todos has 0 elements, if so, load from device storage
-//empty array passed as second argument means this useEffect will only run on mount/unmount
-// it does not depend on any changing values or changing states and does not need to re-run
-// since we only want to check devices storage once
-useEffect(() => {
-  console.log("useEffect,[]");
-  if (todos.length == 0){
-    loadFromStorage();
-  }
-},[]);
+  //check if the arrray holding todos has 0 elements, if so, load from device storage
+  //empty array passed as second argument means this useEffect will only run on mount/unmount
+  // it does not depend on any changing values or changing states and does not need to re-run
+  // since we only want to check devices storage once!!!!
+  useEffect(() => {
+    console.log("useEffect,[]");
+    if (todos.length == 0) {
+      loadFromStorage();
+    }
+  }, []);
 
-// save to storage after each render when the state of the todos has been changed.
+  // save to storage after each render when the state of the todos has been changed.
+  useEffect(() => {
+    console.log("useEffect,[todos]");
+    saveToStorage();
+    filterTodoData(category);
+  },[todos]);
+
 useEffect(() => {
-  console.log("useEffect,[todos]");
-  saveToStorage();
-},[todos]);
+  console.log("useEffect,[category]"),
+  console.log("category selected: ", category);
+  filterTodoData(category);
+},[category]);
+
+
+
+
+  //filter the todo list based on the category selections
+  const filterTodoData = (value) => {
+
+
+    //  temp todo array
+    let updatedTodos = [];
+
+    switch (value) {
+      case 'all':
+        setFilteredTodos(todos);
+        break;
+      case 'completed':
+        updatedTodos = todos.filter(todo => todo.completed == true);
+        setFilteredTodos(updatedTodos);
+        break;
+      case 'remaining':
+        updatedTodos = todos.filter(todo => todo.completed == false);
+        setFilteredTodos(updatedTodos);
+        break;
+
+      default:
+        setFilteredTodos(todos);
+
+    }
+  }
+
 
   //function to remove a todo from the list
   const removeTodoHandler = (id) => {
@@ -54,10 +97,10 @@ useEffect(() => {
   const saveToStorage = async () => {
     try {
       await AsyncStorage.setItem(TODO_LIST_STORAGE, JSON.stringify(todos))
-      .then(() => {
-        //log a success message after storing the todo list
-        console.log('data stored successfully');
-      })
+        .then(() => {
+          //log a success message after storing the todo list
+          console.log('data stored successfully');
+        })
     } catch (err) {
       console.log(err);
     }
@@ -66,18 +109,18 @@ useEffect(() => {
   const loadFromStorage = async () => {
     try {
       await AsyncStorage.getItem(TODO_LIST_STORAGE)
-      .then((stringifyTodoList) => {
-        // if todolist is not null, there's a string to parse
-        if(stringifyTodoList){
-          console.log("stringifyTodoList: ", stringifyTodoList);
-          const parseTodoList = JSON.parse(stringifyTodoList)
-          setTodos(parseTodoList);
-        }
-      });
-    }catch(err){
+        .then((stringifyTodoList) => {
+          // if todolist is not null, there's a string to parse
+          if (stringifyTodoList) {
+            console.log("stringifyTodoList: ", stringifyTodoList);
+            const parseTodoList = JSON.parse(stringifyTodoList)
+            setTodos(parseTodoList);
+          }
+        });
+    } catch (err) {
       console.log(err);
     }
-}
+  }
 
 
 
@@ -98,7 +141,7 @@ useEffect(() => {
     Alert.alert(
       "input too short!",
       " ",
-      [{text:"OK"}],
+      [{ text: "OK" }],
     )
   }
 
@@ -107,7 +150,7 @@ useEffect(() => {
 
 
     // of the string.length is too short, port alert instead of adding todo
-    if (textInput.length<=2){
+    if (textInput.length <= 2) {
       console.log("input too short!");
       createAlert();
 
@@ -140,30 +183,34 @@ useEffect(() => {
   )
 
 
-    // whipe the todo list by reverting it back to its initial state
-    const deleteList = () => {
-      setTodos([]);
-    }
+  // whipe the todo list by reverting it back to its initial state
+  const deleteList = () => {
+    setTodos([]);
+  }
 
 
-    // function to filter the todo list by Complete or Remaining or All
-    const handleSelectedItem = (category) => {
-      // filter the todos based on selected item
-      console.log("category selected: ",category);
-    }
+
+
+  //-------------------------------------
+  // function to filter the todo list by Complete or Remaining or All
+  const handleSelectedCategory = (value) => {
+    // filter the todos based on selected item
+    setCategory(value);
+    console.log("category selected: ", category);
+  }
 
   return (
     <SafeAreaView style={appStyles.container}>
       {/* Header */}
-      <Header deleteList={deleteList}/>
+      <Header deleteList={deleteList} />
       <View style={appStyles.content}>
-        <CategoryPicker handleSelectedItem={handleSelectedItem}/>
+        <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
         {/* todo list */}
         <View style={appStyles.todoList}>
           {/* flatL list with todos */}
 
           <FlatList
-            data={todos}
+            data={filteredTodos}
             renderItem={renderTodos}
             keyExtractor={(item) => item.id}
           />

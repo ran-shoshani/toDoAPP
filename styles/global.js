@@ -50,7 +50,7 @@ export const headerStyles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     headerText: {
-        
+        color: '#FFFFFF',
         fontSize: 36,
         fontWeight: 'bold',
 
@@ -65,12 +65,12 @@ export const addTodoStyles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomLeftRadius: 3,
         borderBottomRightRadius: 3,
-        borderBottomColor: 'green',
+        borderBottomColor: 'black',
 
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
     },
     textInput: {
         marginBottom: 10,
@@ -108,8 +108,8 @@ export const todoItemStyles = StyleSheet.create({
 
       deleteIcon: {
           padding: 10,
-          borderColor: '#000',
-          borderRadius: 5,
+          borderColor: '#0000',
+          borderRadius: 10,
       },
 
     todoTextPicked:{
