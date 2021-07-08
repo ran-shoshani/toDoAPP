@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, TextInputComponent } from 'react-native';
+import { View , TextInput, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import {addTodoStyles , colors} from '../styles/global';
+import { addTodoStyles } from '../styles/global';
 
 export default function AddTodo({ addTodoHandler }) {
 
@@ -17,7 +17,7 @@ export default function AddTodo({ addTodoHandler }) {
     }
 
     return (
-        <View style={colors.primary}>
+        <View style={addTodoStyles.addTodo}>
             
             <TextInput
                 value={textInput}

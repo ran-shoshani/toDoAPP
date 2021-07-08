@@ -15,24 +15,22 @@ export const appStyles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFF',
         // alignItems: 'center',
         // justifyContent: 'center',
       },
-    
-      content: {
+    content: {
         padding: 20,
-    
-      },
-      header: {
-        height: '15%',
-        backgroundColor: '#DCFDE4',
       },
       todoList: {
         //padding: 10,
         height: '80%',
         paddingBottom: 3,
       },
+      footer: {
+          flex: 1,
+          //paddingBottom: 20,
+      }
 
 })
 
@@ -40,8 +38,9 @@ export const appStyles = StyleSheet.create({
 export const headerStyles = StyleSheet.create({
     header: {
         height: '15%',
+        //position: fixed,
         backgroundColor: '#152349',
-        //backgroundColor: '#DCFDE4',
+        //backgroundColor: '#DCFDE4', 
         //marginBottom: '7.5%',
 
         display: 'flex',
@@ -60,8 +59,8 @@ export const headerStyles = StyleSheet.create({
 
 export const addTodoStyles = StyleSheet.create({
     addTodo: {
+        
         marginHorizontal: 8,
-
         borderBottomWidth: 2,
         borderBottomLeftRadius: 3,
         borderBottomRightRadius: 3,
@@ -73,6 +72,7 @@ export const addTodoStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     textInput: {
+        
         marginBottom: 10,
         paddingLeft: 10,
 
@@ -108,7 +108,7 @@ export const todoItemStyles = StyleSheet.create({
 
       deleteIcon: {
           padding: 10,
-          borderColor: '#0000',
+          borderColor: '#000',
           borderRadius: 10,
       },
 
@@ -130,4 +130,31 @@ export const todoItemStyles = StyleSheet.create({
         paddingRight: 10,
     }
 
+})
+
+
+export const pickerStyle = StyleSheet.create({
+    inputIOS: {
+        alignSelf: 'center',
+        backgroundColor: colors.primary,
+        borderColor: colors.primaryText,
+        borderWidth: 1,
+        borderRadius: 5,
+        color: colors.primaryText,
+    },
+    inputAndroid: {
+        alignSelf: 'center',
+        backgroundColor: colors.primary,
+        borderColor: colors.primaryText,
+        borderWidth: 1,
+        borderRadius: 5,
+        width: '40%',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: colors.primaryText,
+    },
+    placeholder: {
+        color: colors.primaryText,
+    }
 })

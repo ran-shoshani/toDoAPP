@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView, Alert } from 'react-native';
+import { View, FlatList, SafeAreaView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
@@ -201,9 +201,10 @@ useEffect(() => {
 
   return (
     <SafeAreaView style={appStyles.container}>
+      <View style={appStyles.content}>
+
       {/* Header */}
       <Header deleteList={deleteList} />
-      <View style={appStyles.content}>
         <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
         {/* todo list */}
         <View style={appStyles.todoList}>
@@ -217,9 +218,10 @@ useEffect(() => {
         </View>
 
         {/* create task button  */}
+        <View style={appStyles.footer}>
         <AddTodo addTodoHandler={addTodoHandler} />
+        </View>
       </View>
-
     </SafeAreaView>
   );
 
